@@ -24,3 +24,38 @@ namespace lernen {
         }
     }
 }
+
+//Example
+using System;
+
+namespace lernen {
+
+    class Program {
+
+        static void Main() {
+
+            System.Console.WriteLine("Enter name: ");
+            string role = Console.ReadLine();
+
+            if ( role == "Admin") {
+                Console.Write("Enter username: ");
+                string user_name = Console.ReadLine();
+                Console.Write("Enter {0} age: ", user_name);
+                int age = Convert.ToInt32(Console.ReadLine());
+
+                if (age < 0 || age > 99) {
+                    Console.Write("Enter {0} age: ", user_name);
+                    age = Convert.ToInt32(Console.ReadLine());
+                } 
+                if (age < 0 || age > 99) {
+                    Console.WriteLine("Err");
+                    age = 0;
+                } else {
+                    System.Console.WriteLine("Users age is: " + age);
+                }    
+            } else {
+                System.Console.WriteLine("You are not Admin");
+            }
+        }
+    }
+}
