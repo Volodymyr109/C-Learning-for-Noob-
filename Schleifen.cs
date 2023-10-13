@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Rextester
+namespace lernen
 {
     public class Program
     {
