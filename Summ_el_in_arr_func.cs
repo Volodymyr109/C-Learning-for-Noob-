@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 
 namespace lernen {
 
@@ -6,9 +6,14 @@ namespace lernen {
 
         public static void Main(string[] args) {
             
-            int[] arr = {1, 4, 5, 6, 7};
-            int res1 = summa(arr);
+            int[] arr1 = {1, 4, 5, 6, 7};
+            int res1 = summa(arr1);
             Console.WriteLine("res: " + res1);
+
+            int[] arr2 = {7, 6, 7, 5, 4};
+            int res2 = summa(arr2);
+            Console.WriteLine("res: " + res2);
+
         }
 
         public static int summa(int[] arr) {
