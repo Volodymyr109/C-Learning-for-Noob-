@@ -1,23 +1,69 @@
-﻿﻿using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using CsvHelper;
+using CsvHelper.Configuration;
 
-namespace lernen {
+public class RechnungModel
+{
+    public int KundenNr { get; set; }
+    public int ArtikelNr { get; set; }
+    public int Anzahl { get; set; }
+}
 
-    public class Program {
+public class KundenModel 
+{
+    public int KundenNr { get; set; }
+    public string Name { get; set; }
+    public string Strasse { get; set; }
+    public string Ort { get; set; }
+}
 
-        public static void Main(string[] args) {
-            
-            string word = "MOIN MOIN ";
-            word += "WILLST DU EIN FISCHBROTSCHEN";
+public class ArtikelModel
+{
+    public int ArtikelNr { get; set; } 
+    public string Name { get; set; }
+    public float Preis { get; set; }
+}
 
-            //System.Console.WriteLine(word.Length);
-            //word = String.Concat(word, "?????????");
-            //Console.WriteLine(string.Compare(word, "Helllo"));
+class Program
+{
+    static void Main(string[] args)
+    {
+        string rechnungCsvFilePath = "Rechnung.csv";
+        string kundenCsvFilePath = "Kunden.csv";
+        string artikelCsvFilePath = "Artikel.csv";
 
-            string people = " Alex, Bob, Alice";
-            string[] names = people.Split(new char[]{','});
-            foreach(string el in names)
-                System.Console.WriteLine(el);
+        var rechnungen = ReadCsvFile<RechnungModel>(rechnungCsvFilePath);
+        var kunden = ReadCsvFile<KundenModel>(kundenCsvFilePath);
+        var artikel = ReadCsvFile<ArtikelModel>(artikelCsvFilePath);
+
+        Console.WriteLine("Rechnungen:");
+        foreach (var rechnung in rechnungen)
+        {
+            Console.WriteLine($"KundenNr: {rechnung.KundenNr}, ArtikelNr: {rechnung.ArtikelNr}, Anzahl: {rechnung.Anzahl}");
         }
 
+        Console.WriteLine("\nKunden:");
+        foreach (var kunde in kunden)
+        {
+            Console.WriteLine($"KundenNr: {kunde.KundenNr}, Name: {kunde.Name}, Strasse: {kunde.Strasse}, Ort: {kunde.Ort}");
+        }
+
+        Console.WriteLine("\nArtikel:");
+        foreach (var artikelEntry in artikel)
+        {
+            Console.WriteLine($"ArtikelNr: {artikelEntry.ArtikelNr}, Name: {artikelEntry.Name}, Preis: {artikelEntry.Preis}");
+        }
+    }
+
+    static List<T> ReadCsvFile<T>(string filePath)
+    {
+        using (var reader = new StreamReader(filePath))
+        using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)))
+        {
+            return csv.GetRecords<T>().ToList();
+        }
     }
 }
